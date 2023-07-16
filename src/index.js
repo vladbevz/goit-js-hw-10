@@ -48,7 +48,7 @@ function makeInfoCat() {
       showCatInfo(data[0]);
     })
     .catch(() => {
-      errorMessage.style.display = 'block';
+      errorMessage.style.display = 'none ';
       Notiflix.Notify.failure(
         'Oops! Something went wrong! Try reloading the page!'
       );
