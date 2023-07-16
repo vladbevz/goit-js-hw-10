@@ -1,6 +1,7 @@
 import { fetchBreeds, fetchCatByBreed } from './cat-api';
 import Notiflix from 'notiflix';
 import SlimSelect from 'slim-select';
+import 'slim-select/dist/slimselect.css';
 
 const errorMessage = document.querySelector('.error');
 const loadingMessage = document.querySelector('.loader');
@@ -11,6 +12,10 @@ catBreed.onchange = makeInfoCat;
 errorMessage.style.display = 'none';
 loadingMessage.style.display = 'none';
 catInfo.style.display = 'none';
+
+new SlimSelect({
+  select: '#breed-select',
+});
 
 function makeSelect() {
   fetchBreeds()
@@ -33,6 +38,11 @@ function makeInfoCat() {
   loadingMessage.style.display = 'block';
   fetchCatByBreed(catBreed.value)
     .then(data => {
+      if (data.length === 0) {
+        return Notiflix.Notify.warning(
+          'Sorry, nothing was found for the breed'
+        );
+      }
       loadingMessage.style.display = 'none';
       catInfo.style.display = 'block';
       showCatInfo(data[0]);
